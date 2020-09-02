@@ -1947,7 +1947,7 @@
  * Select the language to display on the LCD. These languages are available:
  *
  *   en, an, bg, ca, cz, da, de, el, el_gr, es, eu, fi, fr, gl, hr, hu, it,
- *   jp_kana, ko_KR, nl, pl, pt, pt_br, ro ru, sk, tr, uk, vi, zh_CN, zh_TW, test
+ *   jp_kana, ko_KR, nl, pl, pt, pt_br, ro, ru, sk, tr, uk, vi, zh_CN, zh_TW, test
  *
  * :{ 'en':'English', 'an':'Aragonese', 'bg':'Bulgarian', 'ca':'Catalan', 'cz':'Czech', 'da':'Danish', 'de':'German', 'el':'Greek', 'el_gr':'Greek (Greece)', 'es':'Spanish', 'eu':'Basque-Euskera', 'fi':'Finnish', 'fr':'French', 'gl':'Galician', 'hr':'Croatian', 'hu':'Hungarian', 'it':'Italian', 'jp_kana':'Japanese', 'ko_KR':'Korean (South Korea)', 'nl':'Dutch', 'pl':'Polish', 'pt':'Portuguese', 'pt_br':'Portuguese (Brazilian)', 'ro':'Romanian', 'ru':'Russian', 'sk':'Slovak', 'tr':'Turkish', 'uk':'Ukrainian', 'vi':'Vietnamese', 'zh_CN':'Chinese (Simplified)', 'zh_TW':'Chinese (Traditional)', 'test':'TEST' }
  */
@@ -2461,49 +2461,46 @@
 //=============================================================================
 
 //
-// TFT display with optional touch screen
-// Color Marlin UI with standard menu system
+// TFT Type - Select your Display type
 //
-//#define TFT_320x240
-//#define TFT_320x240_SPI
-#ifdef COLOR_UI
-#define TFT_480x320
-#endif
-//#define TFT_480x320_SPI
+// Available optoions are:
+//      MKS_TS35_V2_0,
+//      MKS_ROBIN_TFT24, MKS_ROBIN_TFT28, MKS_ROBIN_TFT32, MKS_ROBIN_TFT35,
+//      MKS_ROBIN_TFT43,
+//      TFT_TRONXY_X5SA, ANYCUBIC_TFT35, ALFAWISE_TFT28
+//      TFT_GENERIC
+//
+// For TFT_GENERIC, you need configure these 3 options:
+//      Driver:     TFT_DRIVER
+//                  Current Drivers are: AUTO, ST7735, ST7789, ST7796, R61505, ILI9328, ILI9341, ILI9488
+//      Resolution: TFT_WIDTH and TFT_HEIGHT
+//      Interface:  TFT_INTERFACE_FSMC or TFT_INTERFACE_SPI
+//
+//#define TFT_GENERIC
 
 //
-// Skip autodetect and force specific TFT driver
-// Mandatory for SPI screens with no MISO line
-// Available drivers are: ST7735, ST7789, ST7796, R61505, ILI9328, ILI9341, ILI9488
+// TFT UI - User Interface Selection
 //
-//#define TFT_DRIVER AUTO
+// Available options are:
+//     TFT_CLASSIC_UI - Emulated DOGM - 128x64 Upscaled
+//     TFT_COLOR_UI   - Marlin Default Menus Touch Friendly, using full TFT capabilities
+//     TFT_LVGL_UI    - A Modern UI using LVGL
+//
+//     For LVGL_UI, you need the copy the 'assets' folder from the build directory to the
+//     root of your SD card, together with the compiled firmware.
+//
+//#define TFT_COLOR_UI
 
 //
-// SPI display (MKS Robin Nano V2.0, MKS Gen L V2.0)
-// Upscaled 128x64 Marlin UI
+// TFT Rotation
 //
-//#define SPI_GRAPHICAL_TFT
-
+// Available options are: TFT_TURN_90, TFT_TURN_180, TFT_TURN_270,
+//                        TFT_TURN_90_MIRROR_X, TFT_TURN_90_MIRROR_Y,
+//                        TFT_TURN_180_MIRROR_X, TFT_TURN_180_MIRROR_Y,
+//                        TFT_TURN_270_MIRROR_X, TFT_TURN_270_MIRROR_Y,
+//                        TFT_NO_ROTATION
 //
-// FSMC display (MKS Robin, Alfawise U20, JGAurora A5S, REXYZ A1, etc.)
-// Upscaled 128x64 Marlin UI
-//
-#if defined(CLASSIC_UI)
-  #define FSMC_GRAPHICAL_TFT
-//TFT SETUP DONE BY CHITU BOARD
-#elif defined(LVGL_UI)
-//
-// TFT LVGL UI
-//
-// Using default MKS icons and fonts from: https://git.io/JJvzK
-// Just copy the 'assets' folder from the build directory to the
-// root of your SD card, together with the compiled firmware.
-//
-  #define TFT_LVGL_UI_FSMC
-#endif
-
-//#define TFT_LVGL_UI_FSMC  // Robin nano v1.2 uses FSMC
-//#define TFT_LVGL_UI_SPI   // Robin nano v2.0 uses SPI
+//#define TFT_ROTATION TFT_NO_ROTATION
 
 //=============================================================================
 //============================  Other Controllers  ============================
@@ -2646,11 +2643,20 @@
   #define NEOPIXEL_PIN     4       // LED driving pin
   //#define NEOPIXEL2_TYPE NEOPIXEL_TYPE
   //#define NEOPIXEL2_PIN    5
-  //#define NEOPIXEL2_INSERIES     // Default behavior is NeoPixel 2 in parallel
-  #define NEOPIXEL_PIXELS 30       // Number of LEDs in the strip, larger of 2 strips if 2 NeoPixel strips are used
+  #define NEOPIXEL_PIXELS 30       // Number of LEDs in the strip. (Longest strip when NEOPIXEL2_SEPARATE is disabled.)
   #define NEOPIXEL_IS_SEQUENTIAL   // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
   #define NEOPIXEL_BRIGHTNESS 127  // Initial brightness (0-255)
   //#define NEOPIXEL_STARTUP_TEST  // Cycle through colors at startup
+
+  // Support for second Adafruit NeoPixel LED driver controlled with M150 S1 ...
+  //#define NEOPIXEL2_SEPARATE
+  #if ENABLED(NEOPIXEL2_SEPARATE)
+    #define NEOPIXEL2_PIXELS      15  // Number of LEDs in the second strip
+    #define NEOPIXEL2_BRIGHTNESS 127  // Initial brightness (0-255)
+    #define NEOPIXEL2_STARTUP_TEST    // Cycle through colors at startup
+  #else
+    //#define NEOPIXEL2_INSERIES      // Default behavior is NeoPixel 2 in parallel
+  #endif
 
   // Use a single NeoPixel LED for static (background) lighting
   //#define NEOPIXEL_BKGD_LED_INDEX  0               // Index of the LED to use
