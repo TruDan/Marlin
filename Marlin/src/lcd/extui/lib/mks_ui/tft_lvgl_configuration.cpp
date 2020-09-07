@@ -43,7 +43,7 @@
 #include "../../../../inc/MarlinConfig.h"
 
 #include HAL_PATH(../../HAL, tft/xpt2046.h)
-XPT2046 touch;
+XPT2046 touchIO;
 
 #if ENABLED(POWER_LOSS_RECOVERY)
   #include "../../../../feature/powerloss.h"
@@ -414,7 +414,7 @@ void tft_lvgl_init() {
 
   //spi_flash_read_test();
 
-  touch.Init();
+  touchIO.Init();
 
   lv_init();
 
@@ -514,7 +514,7 @@ unsigned int getTickDiff(unsigned int curTick, unsigned int lastTick) {
 }
 
 static bool get_point(int16_t *x, int16_t *y) {
-  bool is_touched = touch.getRawPoint(x, y);
+  bool is_touched = touchIO.getRawPoint(x, y);
 
   if (is_touched) {
     *x = int16_t((int32_t(*x) * XPT2046_X_CALIBRATION) >> 16) + XPT2046_X_OFFSET;
