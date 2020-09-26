@@ -41,9 +41,9 @@
 // #define XY2_V6_255_TITAN_TMC 1
 // #define XY2_V6_255_BMG_TMC 1
 
-#define LVGL_UI
-//#define CLASSIC_UI
-// #define COLOR_UI
+//#define LVGL_UI
+#define CLASSIC_UI
+//#define COLOR_UI
 
 #define S_CURVE_ACCELERATION
 #define CLASSIC_JERK
@@ -270,7 +270,7 @@
 
 // Show the bitmap in Marlin/_Statusscreen.h on the status screen.
 #ifdef CLASSIC_UI
-#define CUSTOM_STATUS_SCREEN_IMAGE
+//#define CUSTOM_STATUS_SCREEN_IMAGE
 #endif
 
 // @section machine
@@ -968,7 +968,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 500, 500, 5, 100 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1218,7 +1218,7 @@
 #if defined(XY2_V6_255_NO_TITAN_TMC) || defined(XY2_V6_255_TITAN_TMC) || defined(XY2_V6_255_BMG_TMC)
 #define NOZZLE_TO_PROBE_OFFSET { -50, -10, -2 }
 #else
-#define NOZZLE_TO_PROBE_OFFSET { -30, -5, -1 }
+#define NOZZLE_TO_PROBE_OFFSET { -30, -5, 0 }
 #endif
 
 // Most probes should stay away from the edges of the bed, but
@@ -1347,7 +1347,7 @@
 #else
   #define INVERT_E0_DIR false
 #endif
-#if EXTRUDERS > 2
+#if EXTRUDERS > 1
   #if defined(WITH_TITAN) || defined(WITH_BMG)
     #define INVERT_E1_DIR true
   #else
@@ -2526,7 +2526,7 @@
 //
 // ADS7843/XPT2046 ADC Touchscreen such as ILI9341 2.8
 //
-//#define TOUCH_SCREEN
+#define TOUCH_SCREEN
 //DONE BY CHITU BOARD
 #if ENABLED(TOUCH_SCREEN)
   #define BUTTON_DELAY_EDIT 200 // (ms) Button repeat delay for edit screens
