@@ -22,7 +22,7 @@
 #pragma once
 
 //JUST uncomment the option for your machine
-// #define V6_330_TITAN_TMC 1
+#define V6_330_TITAN_TMC 1
 // #define V6_330_TITAN_NO_TMC 1
 // #define V6_330_NO_TITAN_TMC 1
 // #define V6_330_NO_TITAN_NO_TMC 1
@@ -57,7 +57,7 @@
 
 // #define LVGL_UI
 // #define CLASSIC_UI
-// #define COLOR_UI
+#define COLOR_UI
 
 #if V6_330_TITAN_TMC
   #define MOTHERBOARD BOARD_CHITU3D_V6
@@ -1009,7 +1009,7 @@
   //#define Z3_DRIVER_TYPE A4988
   //#define Z4_DRIVER_TYPE A4988
   #define E0_DRIVER_TYPE TMC2208_STANDALONE
-  //#define E1_DRIVER_TYPE A4988
+  #define E1_DRIVER_TYPE TMC2208_STANDALONE
   //#define E2_DRIVER_TYPE A4988
   //#define E3_DRIVER_TYPE A4988
   //#define E4_DRIVER_TYPE A4988
@@ -1026,7 +1026,7 @@
   //#define Z3_DRIVER_TYPE A4988
   //#define Z4_DRIVER_TYPE A4988
   #define E0_DRIVER_TYPE A4988
-  //#define E1_DRIVER_TYPE A4988
+  #define E1_DRIVER_TYPE A4988
   //#define E2_DRIVER_TYPE A4988
   //#define E3_DRIVER_TYPE A4988
   //#define E4_DRIVER_TYPE A4988
@@ -1054,7 +1054,7 @@
 //#define ENDSTOP_NOISE_THRESHOLD 2
 
 // Check for stuck or disconnected endstops during homing moves.
-//#define DETECT_BROKEN_ENDSTOP
+#define DETECT_BROKEN_ENDSTOP
 
 //=============================================================================
 //============================== Movement Settings ============================
